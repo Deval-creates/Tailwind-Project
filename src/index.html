@@ -8,21 +8,26 @@
 </head>
 <body>
     <div id="navbar" class="bg-slate-700 text-white p-2 flex flex-wrap gap-9 font-serif">
+        <button id="toggle-sidebar" class="hover:text-[15px]">☰</button>
         <a href="#" class="hover:text-[15px]">Home</a>
         <a href="./nav_links/about.html" class="hover:text-[15px]">About</a>
         <a href="./nav_links/contact.html" class="hover:text-[15px]">Contact</a>
         <a href="./nav_links/login.html" class="hover:text-[15px]">Login/Register</a>
     </div>
-    <div id="s&h-container" class="flex min-h-screen">
-        <div id="sidebar" class="bg-slate-600 flex flex-col w-44 text-white font-serif border-t-2 border-white">
+    <div id="sh-container" class="flex min-h-screen">
+        <div id="sidebar" class="bg-slate-600 flex flex-col w-44 overflow-hidden transition-all duration-300 text-white font-serif border-t-2 border-white">            
             <a href="#" class="ml-9 mt-20 hover:text-[15px]">Products</a>
             <a href="#" class="ml-9 mt-20 hover:text-[15px]">Deals</a>
             <a href="#" class="ml-9 mt-20 hover:text-[15px]">New Releases</a>
             <a href="#" class="ml-9 mt-20 hover:text-[15px]">Electronics</a>
         </div>
-        <div id="home_area" class="flex-1 bg-blue-700 p-5">
-            <h1 class="text-white font-extrabold text-4xl font-mono text-center mt-10"> Welcome to E-Shopping </h1>
-            <div id="products" class="flex flex-wrap justify-around gap-8 mt-24">
+        <div id="home_area" class="flex-1 bg-orange-50 p-5">
+        <div class="h-16">
+            <h1 class="text-slate-600 font-extrabold text-4xl font-mono text-center mt-10">
+            <span id="typed"></span>
+            </h1>  
+        </div>         
+        <div id="products" class="flex flex-wrap justify-around gap-8 mt-24">
                 <div id="product1" class="text-white rounded-3xl">
                     <img
                         src="https://images.pexels.com/photos/19281836/pexels-photo-19281836.jpeg"
@@ -63,5 +68,41 @@
             </div>
         </div>
     </div>
+    <script>
+    /* sidebar hide and show */
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('toggle-sidebar');
+
+    toggleBtn.addEventListener('click', () => {
+        const closed = sidebar.style.width === '0px';
+        sidebar.style.width = closed ? '11rem' : '0px';
+    });
+
+    /* Type welcome to E-shopping */
+    const text = 'Welcome to E-Shopping';
+    const typed = document.getElementById('typed');
+    let i = 0;
+    let deleting = false;
+
+    function type() {
+        typed.textContent = text.slice(0, i);
+
+        let delay = deleting ? 50 : 120;
+
+        if (!deleting && i === text.length) {
+            deleting = true;
+            delay = 2000;            // pause with full text showing
+        } else if (deleting && i === 0) {
+            deleting = false;
+            delay = 600;             // short pause before retyping
+        } else {
+            i += deleting ? -1 : 1;
+        }
+
+        setTimeout(type, delay);
+    }
+
+    type();
+</script>
 </body>
 </html>
